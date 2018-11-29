@@ -25,8 +25,6 @@ Text Domain: export-users-to-csv
     Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 */
 
-load_plugin_textdomain( 'export-users-to-csv', false, basename( dirname( __FILE__ ) ) . '/languages' );
-
 /**
  * Main plugin class
  *
@@ -116,7 +114,7 @@ class PP_EU_Export_Users {
         <fieldset>
             <p>
                 <label>
-                    <input type="radio" name="content" value="users"><?php echo __('Users', 'export-users-to-csv'); ?>
+                    <input type="radio" name="content" value="users"><?php echo __('Users to CSV (<font color="red"><i>new feature</i></font>)', 'export-users-to-csv'); ?>
                 </label>
             </p>
             <ul id="users-filters" class="export-filters">
@@ -148,9 +146,8 @@ class PP_EU_Export_Users {
             </ul>
         </fieldset>
         <div class="eutcsv_leave_review">
-            <h4><?php echo __('Success!', 'export-users-to-csv' ); ?></h4>
-            <p><?php echo __('Your file should be downloaded now.', 'export-users-to-csv');?></p>
-            <p><?php echo __('If "Export Users to CSV" has been useful for you, please take a minute to let me know by <a href="https://wordpress.org/support/plugin/export-users-to-csv/reviews/?filter=5">leaving a great rating here</a>.', 'export-users-to-csv'); ?></p>
+            <h4><?php echo __('Success!'); ?></h4>
+            <p><?php echo __('Your file should be downloaded now');?></p>
         </div>
         <?php
     }
@@ -207,19 +204,16 @@ class PP_EU_Export_Users {
 
 			$data_keys = array(
 				'ID',
-				'user_login',
-				'user_pass',
-				'user_nicename',
 				'user_email',
-				'user_url',
-				'user_registered',
-				'user_activation_key',
-				'user_status',
-				'display_name'
+				'first_name',
+				'middle_name',
+				'last_name',
+				'phone'
 			);
 			$meta_keys = $wpdb->get_results( "SELECT distinct(meta_key) FROM $wpdb->usermeta" );
 			$meta_keys = wp_list_pluck( $meta_keys, 'meta_key' );
 			$fields    = array_merge( $data_keys, $meta_keys );
+			$fields	   = array_slice( $fields, 0, count($data_keys) );
 
 			$headers = array();
 
@@ -231,7 +225,7 @@ class PP_EU_Export_Users {
 				}
 			}
 
-			echo implode( ',', $headers ) . "\n";
+			echo implode( ';', $headers ) . "\n";
 
 			foreach ( $users as $user ) {
 				$data = array();
@@ -241,7 +235,7 @@ class PP_EU_Export_Users {
 					$data[] = '"' . str_replace( '"', '""', $value ) . '"';
 				}
 
-				echo implode( ',', $data ) . "\n";
+				echo implode( ';', $data ) . "\n";
 			}
 
 			exit;
