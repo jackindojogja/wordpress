@@ -75,6 +75,14 @@ function edit_user( $user_id = 0 ) {
 	}
 	if ( isset( $_POST['first_name'] ) )
 		$user->first_name = sanitize_text_field( $_POST['first_name'] );
+	
+	// Update to DB Midle Name & Phone
+	if ( isset( $_POST['middle_name'] ) )
+		$user->middle_name = sanitize_text_field( $_POST['middle_name'] );
+	
+	if ( isset( $_POST['phone'] ) )
+		$user->phone = sanitize_text_field( $_POST['phone'] );
+	
 	if ( isset( $_POST['last_name'] ) )
 		$user->last_name = sanitize_text_field( $_POST['last_name'] );
 	if ( isset( $_POST['nickname'] ) )

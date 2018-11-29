@@ -1169,7 +1169,9 @@ class wp_xmlrpc_server extends IXR_Server {
 		$user_fields = array(
 			'username'          => $user->user_login,
 			'first_name'        => $user->user_firstname,
+			'middle_name'       => $user->user_middlename,
 			'last_name'         => $user->user_lastname,
+			'phone'             => $user->phone,
 			'registered'        => $this->_convert_date( $user->user_registered ),
 			'bio'               => $user->user_description,
 			'email'             => $user->user_email,
@@ -2456,7 +2458,9 @@ class wp_xmlrpc_server extends IXR_Server {
 	 *  - 'user_id'
 	 *  - 'username'
 	 *  - 'first_name'
+	 *  - 'middle_name'
 	 *  - 'last_name'
+	 *  - 'phone'
 	 *  - 'registered'
 	 *  - 'bio'
 	 *  - 'email'
@@ -2648,6 +2652,7 @@ class wp_xmlrpc_server extends IXR_Server {
 	 *     @type string $password
 	 *     @type array  $content_struct It can optionally contain:
 	 *      - 'first_name'
+	 *      - 'middle_name'
 	 *      - 'last_name'
 	 *      - 'website'
 	 *      - 'display_name'
@@ -2683,9 +2688,15 @@ class wp_xmlrpc_server extends IXR_Server {
 		// only set the user details if it was given
 		if ( isset( $content_struct['first_name'] ) )
 			$user_data['first_name'] = $content_struct['first_name'];
+		
+		if ( isset( $content_struct['middle_name'] ) )
+			$user_data['middle_name'] = $content_struct['middle_name'];
 
 		if ( isset( $content_struct['last_name'] ) )
 			$user_data['last_name'] = $content_struct['last_name'];
+		
+		if ( isset( $content_struct['phone'] ) )
+			$user_data['phone'] = $content_struct['phone'];
 
 		if ( isset( $content_struct['url'] ) )
 			$user_data['user_url'] = $content_struct['url'];
@@ -4517,11 +4528,12 @@ class wp_xmlrpc_server extends IXR_Server {
 		do_action( 'xmlrpc_call', 'blogger.getUserInfo' );
 
 		$struct = array(
-			'nickname'  => $user->nickname,
-			'userid'    => $user->ID,
-			'url'       => $user->user_url,
-			'lastname'  => $user->last_name,
-			'firstname' => $user->first_name
+			'nickname'    => $user->nickname,
+			'userid'      => $user->ID,
+			'url'         => $user->user_url,
+			'lastname'    => $user->last_name,
+			'middlename'  => $user->middle_name,
+			'firstname'   => $user->first_name
 		);
 
 		return $struct;

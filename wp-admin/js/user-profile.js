@@ -339,15 +339,28 @@
 		});
 
 		if ( select.length ) {
-			$('#first_name, #last_name, #nickname').bind( 'blur.user_profile', function() {
+			$('#first_name, #middle_name, #last_name, #nickname').bind( 'blur.user_profile', function() {
 				var dub = [],
 					inputs = {
-						display_nickname  : $('#nickname').val() || '',
-						display_username  : $('#user_login').val() || '',
-						display_firstname : $('#first_name').val() || '',
-						display_lastname  : $('#last_name').val() || ''
+						display_nickname  	: $('#nickname').val() || '',
+						display_username  	: $('#user_login').val() || '',
+						display_firstname 	: $('#first_name').val() || '',
+						display_middlename 	: $('#middle_name').val() || '',
+						display_lastname  	: $('#last_name').val() || ''
 					};
 
+				if ( inputs.display_firstname && inputs.display_middlename && inputs.display_lastname ) {
+					inputs.display_fullname = inputs.display_firstname + ' ' + inputs.display_middlename + ' ' + inputs.display_lastname;
+				}
+				
+				if ( inputs.display_firstname && inputs.display_middlename ) {
+					inputs.display_firstmiddle = inputs.display_firstname + ' ' + inputs.display_middlename;
+				}
+				
+				if ( inputs.display_middlename && inputs.display_lastname ) {
+					inputs.display_middlelast = inputs.display_middlename + ' ' + inputs.display_lastname;
+				}
+					
 				if ( inputs.display_firstname && inputs.display_lastname ) {
 					inputs.display_firstlast = inputs.display_firstname + ' ' + inputs.display_lastname;
 					inputs.display_lastfirst = inputs.display_lastname + ' ' + inputs.display_firstname;

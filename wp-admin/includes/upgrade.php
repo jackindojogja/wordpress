@@ -870,6 +870,9 @@ function upgrade_160() {
 	foreach ( $users as $user ) :
 		if ( !empty( $user->user_firstname ) )
 			update_user_meta( $user->ID, 'first_name', wp_slash($user->user_firstname) );
+		// New Update Middle Name & Phone
+		if ( !empty( $user->user_middlename ) )
+			update_user_meta( $user->ID, 'middle_name', wp_slash($user->user_middlename) );	
 		if ( !empty( $user->user_lastname ) )
 			update_user_meta( $user->ID, 'last_name', wp_slash($user->user_lastname) );
 		if ( !empty( $user->user_nickname ) )
@@ -886,13 +889,17 @@ function upgrade_160() {
 			update_user_meta( $user->ID, 'yim', wp_slash($user->user_icq) );
 		if ( !empty( $user->user_description ) )
 			update_user_meta( $user->ID, 'description', wp_slash($user->user_description) );
+		if ( !empty( $user->phone ) )
+			update_user_meta( $user->ID, 'phone', wp_slash($user->phone) );
 
 		if ( isset( $user->user_idmode ) ):
 			$idmode = $user->user_idmode;
 			if ($idmode == 'nickname') $id = $user->user_nickname;
 			if ($idmode == 'login') $id = $user->user_login;
 			if ($idmode == 'firstname') $id = $user->user_firstname;
+			if ($idmode == 'middlename') $id = $user->user_middlename;
 			if ($idmode == 'lastname') $id = $user->user_lastname;
+			if ($idmode == 'phone') $id = $user->phone;
 			if ($idmode == 'namefl') $id = $user->user_firstname.' '.$user->user_lastname;
 			if ($idmode == 'namelf') $id = $user->user_lastname.' '.$user->user_firstname;
 			if (!$idmode) $id = $user->user_nickname;
@@ -908,7 +915,7 @@ function upgrade_160() {
 		}
 
 	endforeach;
-	$old_user_fields = array( 'user_firstname', 'user_lastname', 'user_icq', 'user_aim', 'user_msn', 'user_yim', 'user_idmode', 'user_ip', 'user_domain', 'user_browser', 'user_description', 'user_nickname', 'user_level' );
+	$old_user_fields = array( 'user_firstname', 'user_middlename', 'user_lastname', 'phone', 'user_icq', 'user_aim', 'user_msn', 'user_yim', 'user_idmode', 'user_ip', 'user_domain', 'user_browser', 'user_description', 'user_nickname', 'user_level' );
 	$wpdb->hide_errors();
 	foreach ( $old_user_fields as $old )
 		$wpdb->query("ALTER TABLE $wpdb->users DROP $old");

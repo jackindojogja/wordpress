@@ -253,10 +253,18 @@ class WP_MS_Users_List_Table extends WP_List_Table {
 	 * @param WP_User $user The current WP_User object.
 	 */
 	public function column_name( $user ) {
-		if ( $user->first_name && $user->last_name ) {
+		if ( $user->first_name && $user->middle_name && $user->last_name ) {
+			echo "$user->first_name $user->middle_name $user->last_name";
+		} elseif ( $user->first_name && $user->middle_name ) {
+			echo "$user->first_name $user->middle_name";
+		} elseif ( $user->middle_name && $user->last_name ) {
+			echo "$user->middle_name $user->last_name";
+		} elseif ( $user->first_name && $user->last_name ) {
 			echo "$user->first_name $user->last_name";
 		} elseif ( $user->first_name ) {
 			echo $user->first_name;
+		} elseif ( $user->middle_name ) {
+			echo $user->middle_name;
 		} elseif ( $user->last_name ) {
 			echo $user->last_name;
 		} else {
@@ -264,6 +272,17 @@ class WP_MS_Users_List_Table extends WP_List_Table {
 		}
 	}
 
+	/**
+	 * Handles the phone column output.
+	 *
+	 * @since 4.3.0
+	 *
+	 * @param WP_User $user The current WP_User object.
+	 */
+	public function column_phone( $user ) {
+		echo "$user->phone";
+	}
+	
 	/**
 	 * Handles the email column output.
 	 *

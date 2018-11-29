@@ -1373,6 +1373,32 @@ function the_author_firstname() {
 }
 
 /**
+ * Retrieve the middle name of the author of the current post.
+ *
+ * @since 1.5.0
+ * @deprecated 2.8.0 Use get_the_author_meta()
+ * @see get_the_author_meta()
+ *
+ * @return string The author's middle name.
+ */
+function get_the_author_middlename() {
+	_deprecated_function( __FUNCTION__, '2.8.0', 'get_the_author_meta(\'middle_name\')' );
+	return get_the_author_meta('middle_name');
+}
+
+/**
+ * Display the middle name of the author of the current post.
+ *
+ * @since 0.71
+ * @deprecated 2.8.0 Use the_author_meta()
+ * @see the_author_meta()
+ */
+function the_author_middlename() {
+	_deprecated_function( __FUNCTION__, '2.8.0', 'the_author_meta(\'middle_name\')' );
+	the_author_meta('middle_name');
+}
+
+/**
  * Retrieve the last name of the author of the current post.
  *
  * @since 1.5.0
@@ -1396,6 +1422,32 @@ function get_the_author_lastname() {
 function the_author_lastname() {
 	_deprecated_function( __FUNCTION__, '2.8.0', 'the_author_meta(\'last_name\')' );
 	the_author_meta('last_name');
+}
+
+/**
+ * Retrieve the phone of the author of the current post.
+ *
+ * @since 1.5.0
+ * @deprecated 2.8.0 Use get_the_author_meta()
+ * @see get_the_author_meta()
+ *
+ * @return string The author's username.
+ */
+function get_the_author_phone() {
+	_deprecated_function( __FUNCTION__, '2.8.0', 'get_the_author_meta(\'phone\')' );
+	return get_the_author_meta('phone');
+}
+
+/**
+ * Display the phone of the author of the current post.
+ *
+ * @since 0.71
+ * @deprecated 2.8.0 Use the_author_meta()
+ * @see the_author_meta()
+ */
+function the_author_phone() {
+	_deprecated_function( __FUNCTION__, '2.8.0', 'the_author_meta(\'phone\')' );
+	the_author_meta('phone');
 }
 
 /**

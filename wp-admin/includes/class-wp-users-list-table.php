@@ -319,6 +319,7 @@ class WP_Users_List_Table extends WP_List_Table {
 			'cb'       => '<input type="checkbox" />',
 			'username' => __( 'Username' ),
 			'name'     => __( 'Name' ),
+			'phone'    => __( 'Phone' ),
 			'email'    => __( 'Email' ),
 			'role'     => __( 'Role' ),
 			'posts'    => __( 'Posts' )
@@ -340,6 +341,7 @@ class WP_Users_List_Table extends WP_List_Table {
 	protected function get_sortable_columns() {
 		$c = array(
 			'username' => 'login',
+			'phone'    => 'phone',
 			'email'    => 'email',
 		);
 
@@ -381,6 +383,7 @@ class WP_Users_List_Table extends WP_List_Table {
 		}
 		$user_object->filter = 'display';
 		$email = $user_object->user_email;
+		$phone = $user_object->phone;
 
 		if ( $this->is_site_users )
 			$url = "site-users.php?id={$this->site_id}&amp;";
@@ -486,15 +489,26 @@ class WP_Users_List_Table extends WP_List_Table {
 						$r .= "$avatar $edit";
 						break;
 					case 'name':
-						if ( $user_object->first_name && $user_object->last_name ) {
+						if ( $user_object->first_name && $user_object->middle_name && $user_object->last_name ) {
+							$r .= "$user_object->first_name $user_object->middle_name $user_object->last_name";
+						} elseif ( $user_object->first_name && $user_object->middle_name ) {
+							$r .= "$user_object->first_name $user_object->middle_name";
+						} elseif ( $user_object->middle_name && $user_object->last_name ) {
+							$r .= "$user_object->middle_name $user_object->last_name";
+						} elseif ( $user_object->first_name && $user_object->last_name ) {
 							$r .= "$user_object->first_name $user_object->last_name";
 						} elseif ( $user_object->first_name ) {
 							$r .= $user_object->first_name;
+						} elseif ( $user_object->middle_name ) {
+							$r .= $user_object->middle_name;
 						} elseif ( $user_object->last_name ) {
 							$r .= $user_object->last_name;
 						} else {
 							$r .= '<span aria-hidden="true">&#8212;</span><span class="screen-reader-text">' . _x( 'Unknown', 'name' ) . '</span>';
 						}
+						break;
+					case 'phone':
+						$r .= $phone;
 						break;
 					case 'email':
 						$r .= "<a href='" . esc_url( "mailto:$email" ) . "'>$email</a>";

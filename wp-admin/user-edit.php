@@ -407,6 +407,12 @@ if ( is_multisite() && is_network_admin() && ! IS_PROFILE_PAGE && current_user_c
 	<td><input type="text" name="first_name" id="first_name" value="<?php echo esc_attr($profileuser->first_name) ?>" class="regular-text" /></td>
 </tr>
 
+<!-- New Input Middle Name -->
+<tr class="user-middle-name-wrap">
+	<th><label for="middle_name"><?php _e('Middle Name (<font color="red"><i>new feature</i></font>)') ?></label></th>
+	<td><input type="text" name="middle_name" id="middle_name" value="<?php echo esc_attr($profileuser->middle_name) ?>" class="regular-text" /></td>
+</tr>
+
 <tr class="user-last-name-wrap">
 	<th><label for="last_name"><?php _e('Last Name') ?></label></th>
 	<td><input type="text" name="last_name" id="last_name" value="<?php echo esc_attr($profileuser->last_name) ?>" class="regular-text" /></td>
@@ -428,13 +434,30 @@ if ( is_multisite() && is_network_admin() && ! IS_PROFILE_PAGE && current_user_c
 
 			if ( !empty($profileuser->first_name) )
 				$public_display['display_firstname'] = $profileuser->first_name;
-
+			
+			//Show Midle Name
+			if ( !empty($profileuser->middle_name) )
+				$public_display['middle_name'] = $profileuser->middle_name;
+			
 			if ( !empty($profileuser->last_name) )
 				$public_display['display_lastname'] = $profileuser->last_name;
 
+			// Show First Middle Last Name (Full Name)
+			if ( !empty($profileuser->first_name) && !empty($profileuser->middle_name) && !empty($profileuser->last_name) ) {
+				$public_display['display_fullname'] = $profileuser->first_name . ' ' . $profileuser->middle_name . ' ' . $profileuser->last_name;
+			}
+			// Show First & Middle Name
+			if ( !empty($profileuser->first_name) && !empty($profileuser->middle_name)) {
+				$public_display['display_firstmiddle'] = $profileuser->first_name . ' ' . $profileuser->middle_name;
+			}
+			
 			if ( !empty($profileuser->first_name) && !empty($profileuser->last_name) ) {
 				$public_display['display_firstlast'] = $profileuser->first_name . ' ' . $profileuser->last_name;
 				$public_display['display_lastfirst'] = $profileuser->last_name . ' ' . $profileuser->first_name;
+			}
+			
+			if ( !empty($profileuser->middle_name) && !empty($profileuser->last_name)) {
+				$public_display['display_middlelast'] = $profileuser->middle_name . ' ' . $profileuser->last_name;
 			}
 
 			if ( !in_array( $profileuser->display_name, $public_display ) ) // Only add this if it isn't duplicated elsewhere
@@ -457,6 +480,15 @@ if ( is_multisite() && is_network_admin() && ! IS_PROFILE_PAGE && current_user_c
 <h2><?php _e( 'Contact Info' ); ?></h2>
 
 <table class="form-table">
+
+<!-- New Phone Input -->
+<tr class="user-phone-wrap">
+	<th><label for="phone"><?php _e('Phone (<font color="red"><i>new feature</i></font>)') ?></label></th>
+	<td><input type="text" name="phone" id="phone" value="<?php echo esc_attr( $profileuser->phone ) ?>" class="regular-text code" />
+	
+	</td>
+</tr>
+
 <tr class="user-email-wrap">
 	<th><label for="email"><?php _e('Email'); ?> <span class="description"><?php _e('(required)'); ?></span></label></th>
 	<td><input type="email" name="email" id="email" value="<?php echo esc_attr( $profileuser->user_email ) ?>" class="regular-text ltr" />

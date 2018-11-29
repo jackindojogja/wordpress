@@ -854,11 +854,19 @@ class WP_REST_Users_Controller extends WP_REST_Controller {
 		if ( in_array( 'first_name', $fields, true ) ) {
 			$data['first_name'] = $user->first_name;
 		}
+		
+		if ( in_array( 'middle_name', $fields, true ) ) {
+			$data['middle_name'] = $user->middle_name;
+		}
 
 		if ( in_array( 'last_name', $fields, true ) ) {
 			$data['last_name'] = $user->last_name;
 		}
 
+		if ( in_array( 'phone', $fields, true ) ) {
+			$data['phone'] = $user->phone;
+		}
+		
 		if ( in_array( 'email', $fields, true ) ) {
 			$data['email'] = $user->user_email;
 		}
@@ -993,9 +1001,17 @@ class WP_REST_Users_Controller extends WP_REST_Controller {
 		if ( isset( $request['first_name'] ) && ! empty( $schema['properties']['first_name'] ) ) {
 			$prepared_user->first_name = $request['first_name'];
 		}
+		
+		if ( isset( $request['middle_name'] ) && ! empty( $schema['properties']['middle_name'] ) ) {
+			$prepared_user->middle_name = $request['middle_name'];
+		}
 
 		if ( isset( $request['last_name'] ) && ! empty( $schema['properties']['last_name'] ) ) {
 			$prepared_user->last_name = $request['last_name'];
+		}
+		
+		if ( isset( $request['phone'] ) && ! empty( $schema['properties']['phone'] ) ) {
+			$prepared_user->phone = $request['phone'];
 		}
 
 		if ( isset( $request['nickname'] ) && ! empty( $schema['properties']['nickname'] ) ) {
@@ -1181,6 +1197,14 @@ class WP_REST_Users_Controller extends WP_REST_Controller {
 						'sanitize_callback' => 'sanitize_text_field',
 					),
 				),
+				'middle_name'  => array(
+					'description' => __( 'Middle name for the user.' ),
+					'type'        => 'string',
+					'context'     => array( 'edit' ),
+					'arg_options' => array(
+						'sanitize_callback' => 'sanitize_text_field',
+					),
+				),
 				'last_name'   => array(
 					'description' => __( 'Last name for the user.' ),
 					'type'        => 'string',
@@ -1188,6 +1212,12 @@ class WP_REST_Users_Controller extends WP_REST_Controller {
 					'arg_options' => array(
 						'sanitize_callback' => 'sanitize_text_field',
 					),
+				),
+				'phone'       => array(
+					'description' => __( 'The phone for the user.' ),
+					'type'        => 'string',
+					'format'      => 'string',
+					'context'     => array( 'edit' ),
 				),
 				'email'       => array(
 					'description' => __( 'The email address for the user.' ),
